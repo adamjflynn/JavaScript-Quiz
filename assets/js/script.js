@@ -5,6 +5,7 @@ function startQuiz() {
     document.getElementById('header').remove();
     }
 
+
 // variables
 
 const question = document.getElementById('question');
@@ -16,7 +17,7 @@ let curQuestion = {};
 let answerInput = false;
 let score = 0;
 
-let questions [
+let questions = [
     {
         question: "Commonly used data types do NOT include:",
             answer1: "strings",
@@ -58,3 +59,4 @@ let questions [
             answer: 4,
     },
 ];
+
