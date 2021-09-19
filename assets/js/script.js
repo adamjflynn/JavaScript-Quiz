@@ -1,4 +1,4 @@
-document.getElementById('start-button').addEventListener('click', startQuiz);
+// document.getElementById('start-button').addEventListener('click', startQuiz);
 
 function startQuiz() {
     document.getElementById('start-button').remove();
@@ -13,7 +13,7 @@ const answer = Array.from(document.getElementsByClassName('answer-text'));
 const questionNumber = document.getElementById('questionNumber');
 const numberCorrect = document.getElementById('score');
 
-let curQuestion = {};
+let currentQuestion = {};
 let answerInput = false;
 let score = 0;
 
@@ -24,7 +24,7 @@ let questions = [
             answer2: "booleans",
             answer3: "alerts",
             answer4: "numbers",
-            answer: 3,
+            answer: 2,
     },
     {
         question: "The Condition in an if / else statement is enclosed with _______.",
@@ -32,7 +32,7 @@ let questions = [
             answer2: "curly brackets",
             answer3: "parenthesis",
             answer4: "square brackets",
-            answer: 3,
+            answer: 2,
     },
     {
         question: "Arrays in JavaScript can be used to store _______.",
@@ -40,7 +40,7 @@ let questions = [
             answer2: "other arrays",
             answer3: "booleans",
             answer4: "all of the above",
-            answer: 4,
+            answer: 3,
     },
     {
         question: "String values must be enclosed within _______ when being assigned to variables.",
@@ -48,7 +48,7 @@ let questions = [
             answer2: "curly brackets",
             answer3: "parenthesis",
             answer4: "square brackets",
-            answer: 3,
+            answer: 2,
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -56,81 +56,55 @@ let questions = [
             answer2: "curly brackets",
             answer3: "parenthesis",
             answer4: "square brackets",
-            answer: 4,
+            answer: 3,
     },
 ];
 
 
 // Start Quiz
-
-quizStart = () => {
-    score = 0;
-    availableQuestions: = [...questions];
-    getNextQuestion();
-};
-
-getNextQuestion = () => {
-    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
-        localStorage.setItem('mostRecentScore', score);
-        //go to the end page
-        return window.location.assign('end.html');
-    }
-    questionCounter++;
-    questionCounterText.innerText = questionCounter + "/" + MAX_QUESTIONS;
-
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    curQuestion = availableQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
-
-    answer.forEach((answer) => {
-        const number = answer.dataset['number'];
-        answer.innerText = currentQuestion['answer' + number];
-    });
-
-    availableQuesions.splice(questionIndex, 1);
-    acceptingAnswers = true;
-};
-
-answer.forEach((answer) => {
-    answer.addEventListener('click', (e) => {
-        if (!acceptingAnswers) return;
-
-        acceptingAnswers = false;
-        const selectedanswer = e.target;
-        const selectedAnswer = selectedanswer.dataset['number'];
-
-        var resultBox = document.getElementById("correct-text");
-        if (selectedAnswer == currentQuestion.answer) {
-            resultBox.innerHTML="Correct!",document.getElementById('correct-text').style.fontSize = "xx-large";
-            incrementScore(CORRECT_BONUS);
-        } else {
-            resultBox.innerHTML="Wrong!",document.getElementById('correct-text').style.fontSize = "xx-large";
-            elem.innerHTML = timeLeft;
-            timeLeft -= 10;
-        }
-
-        getNewQuestion();
-    });
-});
-
-incrementScore = num => {
-    score +=num;
-    scoreText.innerText = score;
+let submitcount= 0;
+let questionCounter = 0;
+questionsFunc = () => {
+    questions.forEach((e,i) => {
+        console.log(e);
+        console.log(e.question);
+        document.querySelector('#question').innerHTML = questions[questionCounter].question;
+        document.querySelector('.answers-container .answer-text[data-number="1"]').innerHTML = questions[questionCounter].answer1;
+        document.querySelector('.answers-container .answer-text[data-number="2"]').innerHTML = questions[questionCounter].answer2;
+        document.querySelector('.answers-container .answer-text[data-number="3"]').innerHTML = questions[questionCounter].answer3;
+        document.querySelector('.answers-container .answer-text[data-number="4"]').innerHTML = questions[questionCounter].answer4;
+        document.querySelector('.answer-outcome').setAttribute('data-answer',questions[questionCounter].answer);
+        //let quiz = document.querySelector("#quiz");
+        //quiz.append('<h2>'+e.question+'</h2><p>'+e.answer1+'</p>');
+    }); 
 }
-
-startGame();
-
-const highScoresList = document.getElementById("highScoresList");
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-const clearHighScoresBtn = document.getElementById("clearHighScoresBtn");
-
-highScoresList.innerHTML = highScores
-    .map(score => {
-        return `<li class="high-score">${score.name} - ${score.score}</li>`;
-    })
-    .join("");
-
-clearHighScoresBtn.addEventListener('click', () =>{
-    localStorage.clear();
-    highScoresList.innerHTML = ""
+questionsFunc();
+let answeredQuestion = document.querySelectorAll('.answers-container');
+answeredQuestion.forEach((e,i) => {
+    console.log(e);
+    e.addEventListener('click', ()=>{
+        console.log('Clicked');
+        console.log(e);
+        console.log(i);
+        let correctAnswer = Number(document.querySelector('.answer-outcome').getAttribute('data-answer'));
+        console.log(correctAnswer); 
+        if ( i === correctAnswer ) {
+            console.log('Correct Answer');
+            document.querySelector('.answer-outcome').innerHTML = "Correct!";
+            // put the two lines below in a settimeout
+            questionCounter += 1;
+            questionsFunc();
+        } else {
+            console.log('Incorrect Answer');
+            document.querySelector('.answer-outcome').innerHTML = "Incorrect!";
+            // put the two lines below in a settimeout
+            questionCounter += 1;
+            questionsFunc();
+        }
+    });
 });
+
+
+// var timeLeft = 75;
+// var elem = document.getElementById('timer');
+// var timerId = setInterval(countdown, 1000);
