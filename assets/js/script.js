@@ -9,7 +9,7 @@ function startQuiz() {
 // variables
 
 const question = document.getElementById('question');
-const answer = Array.from(document.getElementsByClassName('choice-text'));
+const answer = Array.from(document.getElementsByClassName('answer-text'));
 const questionNumber = document.getElementById('questionNumber');
 const numberCorrect = document.getElementById('score');
 
@@ -60,3 +60,77 @@ let questions = [
     },
 ];
 
+
+// Start Quiz
+
+quizStart = () => {
+    score = 0;
+    availableQuestions: = [...questions];
+    getNextQuestion();
+};
+
+getNextQuestion = () => {
+    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+        localStorage.setItem('mostRecentScore', score);
+        //go to the end page
+        return window.location.assign('end.html');
+    }
+    questionCounter++;
+    questionCounterText.innerText = questionCounter + "/" + MAX_QUESTIONS;
+
+    const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+    curQuestion = availableQuestions[questionIndex];
+    question.innerText = currentQuestion.question;
+
+    answer.forEach((answer) => {
+        const number = answer.dataset['number'];
+        answer.innerText = currentQuestion['answer' + number];
+    });
+
+    availableQuesions.splice(questionIndex, 1);
+    acceptingAnswers = true;
+};
+
+answer.forEach((answer) => {
+    answer.addEventListener('click', (e) => {
+        if (!acceptingAnswers) return;
+
+        acceptingAnswers = false;
+        const selectedanswer = e.target;
+        const selectedAnswer = selectedanswer.dataset['number'];
+
+        var resultBox = document.getElementById("correct-text");
+        if (selectedAnswer == currentQuestion.answer) {
+            resultBox.innerHTML="Correct!",document.getElementById('correct-text').style.fontSize = "xx-large";
+            incrementScore(CORRECT_BONUS);
+        } else {
+            resultBox.innerHTML="Wrong!",document.getElementById('correct-text').style.fontSize = "xx-large";
+            elem.innerHTML = timeLeft;
+            timeLeft -= 10;
+        }
+
+        getNewQuestion();
+    });
+});
+
+incrementScore = num => {
+    score +=num;
+    scoreText.innerText = score;
+}
+
+startGame();
+
+const highScoresList = document.getElementById("highScoresList");
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+const clearHighScoresBtn = document.getElementById("clearHighScoresBtn");
+
+highScoresList.innerHTML = highScores
+    .map(score => {
+        return `<li class="high-score">${score.name} - ${score.score}</li>`;
+    })
+    .join("");
+
+clearHighScoresBtn.addEventListener('click', () =>{
+    localStorage.clear();
+    highScoresList.innerHTML = ""
+});

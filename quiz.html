@@ -7,15 +7,17 @@
     <title>Coding Quiz</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<header>
-    <p1 class="sub-title">
-        View high scores
-    </p1>
 
-    <p1 class= "sub-title" id="timer">
+<header id="header">
+    <a class="hs-button" href="hs.html">
+        View high scores
+    </a>
+
+    <a class="timer">
         Time Remaining: 0
-    </p1>
+    </a>  
 </header>
+
 <body>
     <div class="container">
         <div id="quiz">
@@ -36,8 +38,16 @@
                 <p class="answer-data">4</p>
                 <p class="answer-text" data-number="4">Answer 4</p>
             </div>
+            <div class="answer-outcome">
+                Correct! or Incorrect!
+            </div>
         </div>
     </div>
+    <footer>
+        <h2 class="score">
+            Score = 0
+        </h2>
+    </footer>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
