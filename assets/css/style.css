@@ -71,6 +71,9 @@ h2 {
     align-items: center;
 
 }
+#timer {
+    font-size: 24px;
+}
 #question {
     display: flex;
     flex-direction: column;
@@ -96,4 +99,8 @@ h2 {
     display: flex;
     justify-content: center;
     color: darkgreen;
+}
+#summary,
+#highScore {
+    display: none;
 }

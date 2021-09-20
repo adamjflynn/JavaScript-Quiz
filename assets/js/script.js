@@ -52,59 +52,103 @@ let questions = [
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
-            answer1: "quotes",
-            answer2: "curly brackets",
-            answer3: "parenthesis",
-            answer4: "square brackets",
+            answer1: "JaveScript",
+            answer2: "For loops",
+            answer3: "Terminal bash",
+            answer4: "console.log",
             answer: 3,
     },
 ];
 
 
 // Start Quiz
+
+var timeleft = 75;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    document.getElementById("timer").innerHTML = "Finished";
+  } else {
+    document.getElementById("timer").innerHTML = timeleft ;
+  }
+  timeleft -= 1;
+}, 1000);
+
 let submitcount= 0;
 let questionCounter = 0;
 questionsFunc = () => {
     questions.forEach((e,i) => {
-        console.log(e);
-        console.log(e.question);
         document.querySelector('#question').innerHTML = questions[questionCounter].question;
         document.querySelector('.answers-container .answer-text[data-number="1"]').innerHTML = questions[questionCounter].answer1;
         document.querySelector('.answers-container .answer-text[data-number="2"]').innerHTML = questions[questionCounter].answer2;
         document.querySelector('.answers-container .answer-text[data-number="3"]').innerHTML = questions[questionCounter].answer3;
         document.querySelector('.answers-container .answer-text[data-number="4"]').innerHTML = questions[questionCounter].answer4;
         document.querySelector('.answer-outcome').setAttribute('data-answer',questions[questionCounter].answer);
-        //let quiz = document.querySelector("#quiz");
-        //quiz.append('<h2>'+e.question+'</h2><p>'+e.answer1+'</p>');
     }); 
 }
 questionsFunc();
+quizSummary = () => {
+    let finish = document.querySelector('#quiz');
+    finish.append()
+}
 let answeredQuestion = document.querySelectorAll('.answers-container');
+let quizLength = questions.length;
+let finalTime = 0;
 answeredQuestion.forEach((e,i) => {
     console.log(e);
     e.addEventListener('click', ()=>{
         console.log('Clicked');
-        console.log(e);
-        console.log(i);
         let correctAnswer = Number(document.querySelector('.answer-outcome').getAttribute('data-answer'));
-        console.log(correctAnswer); 
         if ( i === correctAnswer ) {
-            console.log('Correct Answer');
             document.querySelector('.answer-outcome').innerHTML = "Correct!";
-            // put the two lines below in a settimeout
-            questionCounter += 1;
-            questionsFunc();
+            if ( quizLength === (questionCounter+1) ) {
+                console.log("made it to the end");
+                finalTime = timeleft;
+                document.querySelector('#timer').setAttribute('style', 'display:none;');
+                document.querySelector('#quiz').setAttribute('style', 'display:none;');
+                document.querySelector('#summary').setAttribute('style', 'display:block;');
+            } else if ( (questionCounter+1) <= quizLength ) {
+                questionCounter += 1;
+                questionsFunc();
+            }
         } else {
             console.log('Incorrect Answer');
             document.querySelector('.answer-outcome').innerHTML = "Incorrect!";
-            // put the two lines below in a settimeout
-            questionCounter += 1;
-            questionsFunc();
+            console.log(timeleft);
+            console.log(timeleft-10);
+            timeleft = (timeleft-10);
+            if ( quizLength === (questionCounter+1) ) {
+                console.log("made it to the end");
+                finalTime = timeleft;
+                document.querySelector('#timer').setAttribute('style', 'display:none;');
+                document.querySelector('#quiz').setAttribute('style', 'display:none;');
+                document.querySelector('#summary').setAttribute('style', 'display:block;');
+            } else if ( (questionCounter+1) <= quizLength ) {
+                questionCounter += 1;
+                questionsFunc();
+            }
         }
     });
 });
+document.querySelector('button').addEventListener('click', ()=>{
+    let highScoreInfo = document.querySelector('input').value;
+    let highScoreList = document.querySelector('#highScore');
+    console.log(highScoreInfo);
+    // let li = document.createElement('li');
+    highScoreList.append(highScoreInfo+' '+finalTime);
+
+});
+
+document.querySelector('.hs-button').addEventListener('click', ()=>{
+    document.querySelector('#highScore').setAttribute('style', 'display:block;');
+    document.querySelector('#quiz').setAttribute('style', 'display:none;');
+    document.querySelector('#summary').setAttribute('style', 'display:none;');
+});
+
+
 
 
 // var timeLeft = 75;
 // var elem = document.getElementById('timer');
 // var timerId = setInterval(countdown, 1000);
+
