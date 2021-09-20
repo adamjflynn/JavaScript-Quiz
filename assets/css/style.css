@@ -15,6 +15,10 @@ p {
     text-align: center;
     font-weight: bold;
 }
+.empty {
+    padding-left: 15%;
+
+}
 .container {
     display: flex;
     justify-content: center;
