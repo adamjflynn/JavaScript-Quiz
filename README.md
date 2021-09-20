@@ -7,4 +7,4 @@ The purpose of this project was to create an interactive quiz involving JavaScri
 
 Link to the deployed application [JavaScript-Quiz](https://adamjflynn.github.io/JavaScript-Quiz/quiz.html) site.
 
-![image](C:\coding\projects\Challenge_4\JavaScript-Quiz\JavaScript-Quiz\assets\jsquiz.jpg)
+![image](https://github.com/adamjflynn/JavaScript-Quiz/blob/main/assets/jsquiz.jpg?raw=true)
