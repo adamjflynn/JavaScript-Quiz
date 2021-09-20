@@ -1,7 +1,7 @@
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: aliceblue;
-    margin: 0;
+    margin: 1%;
     padding: 1%;
 }
 header {
@@ -20,6 +20,7 @@ p {
     justify-content: center;
     align-items: center;
 }
+
 .hs-button {
     background-color: darkgreen;
     color: aliceblue;
@@ -94,6 +95,23 @@ h2 {
     height: 50px;
     width: 150px;
     background: darkgreen;
+}
+.answer-data {
+    display: flex;
+    text-align: left;
+    background: darkgreen;
+    color: aliceblue;
+}
+.answer-text {
+    display: flex;
+    justify-content: center;
+    background: darkgreen;
+    color: aliceblue;
+}
+.answer-outcome {
+    color: darkgreen;
+    font-weight: bold;
+    font: 24px;
 }
 .score {
     display: flex;
